@@ -1,16 +1,15 @@
-# newsapp
+# hw-01: News App
 
-News App
+## Описание
 
-## Getting Started
+Приложенька которая дергает новости по апишке и красиво их показывает. Есть `freezed`,
+есть `dotenv` (свой токен дарю общественности). Все основные пункты выполнены.
 
-This project is a starting point for a Flutter application.
+## Скриншотики
 
-A few resources to get you started if this is your first Flutter project:
+![Главная страница](etc/images/home_page.png)
+![Страница новости](etc/images/detail_page.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## APK
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+А он [тут](build/app/outputs/apk/release/app-release.apk).
