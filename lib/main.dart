@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'screens/news_list_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:newsapp/screens/main_screen.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
@@ -12,10 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: const NewsListScreen(),
+    return ProviderScope(
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        home: const MainScreen(),
+      ),
     );
   }
 }

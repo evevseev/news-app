@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:newsapp/providers.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/news_article.dart';
 
-class NewsDetailScreen extends StatelessWidget {
+class NewsDetailScreen extends ConsumerWidget {
   final NewsArticle article;
 
   const NewsDetailScreen({super.key, required this.article});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteNews = ref.watch(favoriteNewsProvider);
+    final favoriteNewsNotifier = ref.read(favoriteNewsProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(article.title ?? 'No title'),
@@ -41,24 +46,42 @@ class NewsDetailScreen extends StatelessWidget {
                   ),
                 const SizedBox(height: 16),
                 Text(article.content ?? article.description ?? ''),
-                if (article.url != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final Uri url = Uri.parse(article.url!);
-                            if (!await launchUrl(url)) {
-                              throw Exception('Could not launch $url');
-                            }
-                          },
-                          child: const Text('Read more'),
-                        ),
-                      ),
+                const SizedBox(height: 16),
+                Column(children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final Uri url = Uri.parse(article.url!);
+                        if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
+                      child: const Text('Read more'),
                     ),
                   ),
+                  if (favoriteNews.asData?.value.contains(article) == true)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          favoriteNewsNotifier.removeFavoriteNews(article);
+                        },
+                        child: const Text('Remove from favorites'),
+                      ),
+                    )
+                  else
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          favoriteNewsNotifier.addFavoriteNews(article);
+                        },
+                        child: const Text('Add to favorites'),
+                      ),
+                    ),
+                ]),
+                // save button
               ],
             ),
           ),
