@@ -1,4 +1,4 @@
-# hw-01: News App
+# hw-02: News App
 
 ## Описание
 
